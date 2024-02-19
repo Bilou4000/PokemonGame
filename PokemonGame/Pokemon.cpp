@@ -107,6 +107,7 @@ void Pokemon::TakeDamage(int damage)
 
 	// also get poketype of ability for matrix and resistance
 	// matrix
+	// get the matrix row, and the poketype index 
 	mLife -= damage;
 }
 
