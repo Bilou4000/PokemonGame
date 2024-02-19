@@ -28,7 +28,7 @@ public:
 	void Introduction();
 	void ChallengeTrainer(Trainer& thePlayer, Trainer& otherTrainer);
 	void ChallengePokemon(Trainer& thePlayer);
-	void CapturePokemon(Pokemon& pokemon);
+	bool IsPokemonCaptured(Pokemon& pokemon);
 	Pokemon& SendOrChangePokemon();
 	void WinFight();
 	bool CheckIfTeamDead();

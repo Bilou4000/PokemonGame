@@ -41,13 +41,6 @@ void Battle::BattleAgainstTrainer(bool firstTime)
 	{
 		mPlayerPokemon = &mThePlayer->SendOrChangePokemon();
 
-		if (mDeadPlayerPokemon.GetPokemonName() == mPlayerPokemon->GetPokemonName())
-		{
-
-			cout << "This pokemon is already dead, please choose an other pokemon" << endl;
-			return BattleAgainstTrainer(false);
-		}
-
 		if (mPlayerPokemon->GetPokemonLife() <= 0)
 		{
 			cout << "This pokemon is already dead, please choose an other pokemon" << endl;
@@ -146,13 +139,6 @@ void Battle::BattleAgainstPokemon(bool firstTime)
 	{
 		mPlayerPokemon = &mThePlayer->SendOrChangePokemon();
 
-		if (mDeadPlayerPokemon.GetPokemonName() == mPlayerPokemon->GetPokemonName())
-		{
-
-			cout << "This pokemon is already dead, please choose an other pokemon" << endl;
-			return BattleAgainstPokemon(false);
-		}
-
 		if (mPlayerPokemon->GetPokemonLife() <= 0)
 		{
 			cout << "This pokemon is already dead, please choose an other pokemon" << endl;
@@ -173,7 +159,10 @@ void Battle::BattleAgainstPokemon(bool firstTime)
 
 		if (answer == 1)
 		{
-			mThePlayer->CapturePokemon(*mOpponnentPokemon);
+			if (mThePlayer->IsPokemonCaptured(*mOpponnentPokemon)) 
+			{
+				return;
+			}
 
 			const vector<Ability>& abilities = mOpponnentPokemon->GetAbilities();
 			int randomAbility = rand() % abilities.size();

@@ -43,7 +43,7 @@ void Trainer::ChallengePokemon(Trainer& thePlayer)
 	theBattle.BattleAgainstPokemon(true);
 }
 
-void Trainer::CapturePokemon(Pokemon& pokemon)
+bool Trainer::IsPokemonCaptured(Pokemon& pokemon)
 {
 	if (mPokemonTeam.size() < 6 && mPokeballs > 0)
 	{
@@ -60,23 +60,23 @@ void Trainer::CapturePokemon(Pokemon& pokemon)
 		if (captureRate <= 50) 
 		{
 			cout << "You have failed to capture the pokemon" << endl;
-			return;
+			return false;
 		}
 		
 		cout << "You have managed to capture " << pokemon.GetPokemonName() << " !!!!" << endl;
 
 		mPokemonTeam.push_back(pokemon);
 		mPokeballs -= 1;
-		return;
+		return true;
 	}
 	else if (mPokeballs <= 0)
 	{
 		cout << "\nYou don't have enough Pokeballs, try an other time." << endl;
 
-		return;
+		return false;
 	}
 	cout << "\nYou already have 6 pokemon and can't capture one anymore" << endl;
-	return;
+	return false;
 }
 
 bool Trainer::CheckIfTeamDead()
