@@ -67,7 +67,7 @@ bool Pokemon::AttackOtherPokemon(Pokemon& pokemon)
 		}
 	}
 
-	if (canUseSkill == true)
+	if (canUseSkill)
 	{
 		int skill;
 		cout << "\nYou have all this abilities : " << endl;
@@ -160,7 +160,7 @@ void Pokemon::LearnNewAbilities()
 		}
 	}
 
-	if (haveAbility == false)
+	if (!haveAbility)
 	{
 		mAbilities.push_back(allAbility[skill - 1]);
 

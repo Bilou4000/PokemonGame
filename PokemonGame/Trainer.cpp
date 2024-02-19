@@ -50,12 +50,7 @@ bool Trainer::IsPokemonCaptured(Pokemon& pokemon)
 		cout << "\nYou are trying to capture " << pokemon.GetPokemonName() << endl;
 		float captureRate = (((1.0f + (((pokemon.GetPokemonMaxLife() * 3.0f) - (pokemon.GetPokemonLife() * 2.0f)) * 256.0f)) / (pokemon.GetPokemonMaxLife() * 3.0f)) / 334.0f) * 100.0f;
 
-		//float captureRate = ((1.0f + (((60.0f * 3.0f) - (60.0f * 2.0f)) * 256.0f)) / (60.0f * 3.0f)) / 334.0f;
-
 		cout << captureRate << endl;
-
-		//((1+(MaxHP*3-CurrentHP*2)*256)/(MaxHP*3))/334
-
 
 		if (captureRate <= 50) 
 		{

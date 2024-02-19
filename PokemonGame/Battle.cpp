@@ -22,7 +22,7 @@ void Battle::BattleAgainstTrainer(bool firstTime)
 	Pokemon* mPlayerPokemon = nullptr;
 	Pokemon* mOpponnentPokemon = nullptr;
 
-	if (firstTime == true)
+	if (firstTime)
 	{
 		mMaxAbilityCost = 30;
 
@@ -52,7 +52,7 @@ void Battle::BattleAgainstTrainer(bool firstTime)
 
 	while (mOpponnentPokemon->GetPokemonLife() > 0 && mPlayerPokemon->GetPokemonLife() > 0)
 	{
-		if (mPlayerPokemon->AttackOtherPokemon(*mOpponnentPokemon) == true)
+		if (mPlayerPokemon->AttackOtherPokemon(*mOpponnentPokemon))
 		{
 			cout << " damage to " << mOpponnentPokemon->GetPokemonName() << endl;
 			cout << "He now has " << mOpponnentPokemon->GetPokemonLife() << " pv\n" << endl;
@@ -102,11 +102,11 @@ void Battle::BattleAgainstTrainer(bool firstTime)
 	{
 		cout << "\nYour pokemon has been defeated, he now has " << mPlayerPokemon->GetPokemonLife() << "pv" << endl;
 
-		if (mThePlayer->CheckIfTeamDead() == true)
+		if (mThePlayer->CheckIfTeamDead())
 		{
 			return;
 		}
-		if (mThePlayer->CheckIfTeamDead() == false)
+		if (!mThePlayer->CheckIfTeamDead())
 		{
 			mDeadPlayerPokemon = *mPlayerPokemon;
 
@@ -226,11 +226,11 @@ void Battle::BattleAgainstPokemon(bool firstTime)
 	{
 		cout << "\nYour pokemon has been defeated, he now has " << mPlayerPokemon->GetPokemonLife() << "pv" << endl;
 
-		if (mThePlayer->CheckIfTeamDead() == true)
+		if (mThePlayer->CheckIfTeamDead())
 		{
 			return;
 		}
-		if (mThePlayer->CheckIfTeamDead() == false)
+		if (!mThePlayer->CheckIfTeamDead())
 		{
 			mDeadPlayerPokemon = *mPlayerPokemon;
 
