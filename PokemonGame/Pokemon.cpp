@@ -38,12 +38,12 @@ string Pokemon::GetPokemonName()
 	return mName;
 }
 
-int Pokemon::GetPokemonLife()
+float Pokemon::GetPokemonLife()
 {
 	return mLife;
 }
 
-int Pokemon::GetPokemonMaxLife()
+float Pokemon::GetPokemonMaxLife()
 {
 	return mMaxLife;
 }

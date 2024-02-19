@@ -16,6 +16,7 @@ private:
 	int mNuberOfTimeAbiityWasUsed = 0;
 
 public:
+	Battle(Trainer& thePlayer);
 	Battle(Trainer& thePlayer, Trainer& opponentTrainer);
 
 	void BattleAgainstTrainer(bool firstTime);

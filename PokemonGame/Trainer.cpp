@@ -36,18 +36,37 @@ void Trainer::ChallengeTrainer(Trainer& thePlayer, Trainer& otherTrainer)
 	theBattle.BattleAgainstTrainer(true);
 }
 
+void Trainer::ChallengePokemon(Trainer& thePlayer)
+{
+	cout << "\nYou just found a wild pokemon !!" << endl;
+	Battle theBattle = Battle(thePlayer);
+	theBattle.BattleAgainstPokemon(true);
+}
+
 void Trainer::CapturePokemon(Pokemon& pokemon)
 {
 	if (mPokemonTeam.size() < 6 && mPokeballs > 0)
 	{
-		cout << "\nYou are trying to capture the " << pokemon.GetPokemonName() << endl;
-		float captureRate = ((1 + (pokemon.GetPokemonMaxLife() * 3 - pokemon.GetPokemonLife() * 2)) / (pokemon.GetPokemonMaxLife() * 3)) / 256;
+		cout << "\nYou are trying to capture " << pokemon.GetPokemonName() << endl;
+		float captureRate = (((1.0f + (((pokemon.GetPokemonMaxLife() * 3.0f) - (pokemon.GetPokemonLife() * 2.0f)) * 256.0f)) / (pokemon.GetPokemonMaxLife() * 3.0f)) / 334.0f) * 100.0f;
 
-		//check if fails or not ?
+		//float captureRate = ((1.0f + (((60.0f * 3.0f) - (60.0f * 2.0f)) * 256.0f)) / (60.0f * 3.0f)) / 334.0f;
+
+		cout << captureRate << endl;
+
+		//((1+(MaxHP*3-CurrentHP*2)*256)/(MaxHP*3))/334
+
+
+		if (captureRate <= 50) 
+		{
+			cout << "You have failed to capture the pokemon" << endl;
+			return;
+		}
+		
+		cout << "You have managed to capture " << pokemon.GetPokemonName() << " !!!!" << endl;
 
 		mPokemonTeam.push_back(pokemon);
 		mPokeballs -= 1;
-
 		return;
 	}
 	else if (mPokeballs <= 0)
@@ -80,7 +99,7 @@ Pokemon& Trainer::SendOrChangePokemon()
 	int pokemonIndex;
 	int answer;
 
-	cout << "\nYou have this Pokemon team" << endl;
+	cout << "\nYou have this Pokemon team, please choose one to use" << endl;
 	for (int i = 1; i < mPokemonTeam.size() + 1; i++)
 	{
 		//add type ?

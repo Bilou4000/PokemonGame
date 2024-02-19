@@ -4,6 +4,12 @@
 #include "Battle.h"
 #include "allPokemons.h"
 
+Battle::Battle(Trainer& thePlayer)
+{
+	mThePlayer = &thePlayer;
+	mMaxAbilityCost = 5;
+}
+
 Battle::Battle(Trainer& thePlayer, Trainer& opponentTrainer)
 {
 	mThePlayer = &thePlayer;
@@ -160,8 +166,7 @@ void Battle::BattleAgainstPokemon(bool firstTime)
 
 	while (mOpponnentPokemon->GetPokemonLife() > 0 && mPlayerPokemon->GetPokemonLife() > 0)
 	{
-
-		cout << "Do you wish to try to capture it or attack it ?" << endl;
+		cout << "Do you wish to try to capture " << mOpponnentPokemon->GetPokemonName()<<  " or attack it ?" << endl;
 		cout << "1. Capture \n" << "2. Attack" << endl;
 		int answer;
 		cin >> answer;
@@ -169,6 +174,15 @@ void Battle::BattleAgainstPokemon(bool firstTime)
 		if (answer == 1)
 		{
 			mThePlayer->CapturePokemon(*mOpponnentPokemon);
+
+			const vector<Ability>& abilities = mOpponnentPokemon->GetAbilities();
+			int randomAbility = rand() % abilities.size();
+			mOpponentPokemonAbility = abilities[randomAbility];
+
+			cout << mOpponnentPokemon->GetPokemonName() << " used " << mOpponentPokemonAbility.GetName()
+				<< ", it does " << mOpponentPokemonAbility.GetDamage() << " damage to your Pokemon" << endl;
+
+			mPlayerPokemon->TakeDamage(mOpponentPokemonAbility.GetDamage());
 		}
 		else if (answer == 2)
 		{
