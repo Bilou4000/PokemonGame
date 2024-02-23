@@ -21,6 +21,7 @@ Pokemon::Pokemon(string name, string description, PokeType type, int life, vecto
 {
 	mName = name;
 	mDescription = description;
+	mType = type;
 	mLevel = 1;
 	mLife = life;
 	mMaxLife = mLife;
@@ -46,6 +47,11 @@ float Pokemon::GetPokemonLife()
 float Pokemon::GetPokemonMaxLife()
 {
 	return mMaxLife;
+}
+
+float Pokemon::GetPokemonDamage()
+{
+	return mDamageResistance;
 }
 
 void Pokemon::ChangePokemonLife(int newLife)
@@ -85,12 +91,12 @@ bool Pokemon::AttackOtherPokemon(Pokemon& pokemon)
 
 		if (abilityBeingUsed->GetTurnUse() > 0)
 		{
-
-			pokemon.TakeDamage(abilityBeingUsed->GetDamage());
+			pokemon.TakeDamage(abilityBeingUsed->GetDamage(), *abilityBeingUsed);
 
 			abilityBeingUsed->UseAbility();
 
-			cout << "\nYour Pokemon (" << mName << ") used " << abilityBeingUsed->GetName() << ", it did " << abilityBeingUsed->GetDamage();
+			cout << "\nYour Pokemon (" << mName << ") used " << abilityBeingUsed->GetName() << ", it did " << pokemon.mDamageResistance;
+
 			return true;
 		}
 
@@ -102,13 +108,35 @@ bool Pokemon::AttackOtherPokemon(Pokemon& pokemon)
 	return false;
 }
 
-void Pokemon::TakeDamage(int damage)
+void Pokemon::TakeDamage(int damage, Ability abilityAttack)
 {
+	float matrix[18][18] = { 
+		/* NORMAL   */ { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 0.0, 1.0, 1.0, 0.5, 1.0 },
+		/* FIRE     */ { 1.0, 0.5, 0.5, 2.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 1.0, 1.0, 2.0, 1.0 },
+		/* WATER    */ { 1.0, 2.0, 0.5, 0.5, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0 },
+		/* GRASS    */ { 1.0, 0.5, 2.0, 0.5, 1.0, 1.0, 1.0, 0.5, 2.0, 0.5, 1.0, 0.5, 2.0, 1.0, 1.0, 1.0, 0.5, 1.0 },
+		/* ELECTRIC */ { 1.0, 1.0, 2.0, 0.5, 0.5, 1.0, 1.0, 1.0, 0.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 },
+		/* ICE      */ { 1.0, 0.5, 0.5, 2.0, 1.0, 0.5, 1.0, 1.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 1.0 },
+		/* FIGHTING */ { 2.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.5, 1.0, 0.5, 0.5, 0.5, 2.0, 0.0, 1.0, 2.0, 2.0, 0.5 },
+		/* POISON   */ { 1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 0.5, 0.5, 1.0, 1.0, 0.5, 1.0, 0.5, 1.0, 1.0, 0.0, 2.0 },
+		/* GROUND   */ { 1.0, 2.0, 1.0, 0.5, 2.0, 1.0, 1.0, 2.0, 1.0, 0.0, 1.0, 0.5, 2.0, 1.0, 1.0, 1.0, 2.0, 1.0 },
+		/* FLYING   */ { 1.0, 1.0, 1.0, 2.0, 0.5, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 1.0, 1.0, 0.5, 1.0 },
+		/* PSYCHIC  */ { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 1.0, 0.0, 0.5, 1.0 },
+		/* BUG      */ { 1.0, 0.5, 1.0, 2.0, 1.0, 1.0, 0.5, 0.5, 1.0, 0.5, 2.0, 1.0, 1.0, 2.0, 1.0, 1.0, 0.5, 0.5 },
+		/* ROCK     */ { 1.0, 2.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 2.0, 0.5, 1.0, 2.0, 0.5, 1.0, 1.0, 1.0, 0.5, 1.0 },
+		/* GHOST    */ { 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 0.5, 1.0 },
+		/* DRAGON   */ { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.5, 0.0 },
+		/* DARK     */ { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 2.0, 1.0, 1.0, 0.5, 0.5 },
+		/* STEEL    */ { 1.0, 0.5, 0.5, 1.0, 0.5, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 2.0, 1.0, 0.5, 1.0, 0.5, 2.0 },
+		/* FAIRY    */ { 1.0, 0.5, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 2.0, 2.0, 2.0, 1.0 } };
 
-	// also get poketype of ability for matrix and resistance
-	// matrix
-	// get the matrix row, and the poketype index 
-	mLife -= damage;
+	int indexAbilityType = (int) abilityAttack.GetPoketype();
+	int indexPokemonType = (int) mType;
+	float resistance = matrix[indexAbilityType][indexPokemonType];
+	float allDamage = damage * resistance;
+	mDamageResistance = allDamage;
+
+	mLife -= allDamage;
 }
 
 void Pokemon::Rest()

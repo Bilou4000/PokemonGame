@@ -67,9 +67,10 @@ void Battle::BattleAgainstTrainer(bool firstTime)
 			mOpponentPokemonAbility = abilities[randomAbility];
 
 			cout << mOpponnentPokemon->GetPokemonName() << " used " << mOpponentPokemonAbility.GetName()
-				<< ", it does " << mOpponentPokemonAbility.GetDamage() << " damage to your Pokemon" << endl;
+				<< ", it does " << mOpponnentPokemon->GetPokemonDamage() << " damage to your Pokemon" << endl;
+			// You now have : pv
 
-			mPlayerPokemon->TakeDamage(mOpponentPokemonAbility.GetDamage());
+			mPlayerPokemon->TakeDamage(mOpponentPokemonAbility.GetDamage(), mOpponentPokemonAbility);
 
 		}
 		else
@@ -169,9 +170,10 @@ void Battle::BattleAgainstPokemon(bool firstTime)
 			mOpponentPokemonAbility = abilities[randomAbility];
 
 			cout << mOpponnentPokemon->GetPokemonName() << " used " << mOpponentPokemonAbility.GetName()
-				<< ", it does " << mOpponentPokemonAbility.GetDamage() << " damage to your Pokemon" << endl;
+				<< ", it does " << mOpponnentPokemon->GetPokemonDamage() << " damage to your Pokemon" << endl;
+			// You now have : pv
 
-			mPlayerPokemon->TakeDamage(mOpponentPokemonAbility.GetDamage());
+			mPlayerPokemon->TakeDamage(mOpponentPokemonAbility.GetDamage(), mOpponentPokemonAbility);
 		}
 		else if (answer == 2)
 		{
@@ -190,9 +192,10 @@ void Battle::BattleAgainstPokemon(bool firstTime)
 				mOpponentPokemonAbility = abilities[randomAbility];
 
 				cout << mOpponnentPokemon->GetPokemonName() << " used " << mOpponentPokemonAbility.GetName()
-					<< ", it does " << mOpponentPokemonAbility.GetDamage() << " damage to your Pokemon" << endl;
+					<< ", it does " << mOpponnentPokemon->GetPokemonDamage() << " damage to your Pokemon" << endl;
+				// You now have : pv
 
-				mPlayerPokemon->TakeDamage(mOpponentPokemonAbility.GetDamage());
+				mPlayerPokemon->TakeDamage(mOpponentPokemonAbility.GetDamage(), mOpponentPokemonAbility);
 
 			}
 			else

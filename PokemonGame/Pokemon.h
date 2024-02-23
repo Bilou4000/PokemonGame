@@ -16,6 +16,7 @@ private:
 	int mLevel;
 	float mLife;
 	float mMaxLife;
+	float mDamageResistance;
 	bool mIsInCombat;
 	vector<Ability> mAbilities;
 
@@ -28,9 +29,10 @@ public:
 	string GetPokemonName();
 	float GetPokemonLife();
 	float GetPokemonMaxLife();
+	float GetPokemonDamage();
 	void ChangePokemonLife(int newLife);
 	bool AttackOtherPokemon(Pokemon& pokemon);
-	void TakeDamage(int damage);
+	void TakeDamage(int damage, Ability abilityAttack);
 	void LearnNewAbilities();
 	void Rest();
 	bool CheckIfInCombat();
