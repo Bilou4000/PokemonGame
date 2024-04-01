@@ -18,7 +18,7 @@ int main()
     //if stroll around --> find wild pokemon --> combat
     //if combat --> combat against other trainer
 
-    firstTrainer.ChallengePokemon(firstTrainer);
+    //firstTrainer.ChallengePokemon(firstTrainer);
     firstTrainer.ChallengeTrainer(firstTrainer, secondTrainer);
     //firstTrainer.ChallengeTrainer(firstTrainer, secondTrainer);
 

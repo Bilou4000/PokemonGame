@@ -26,7 +26,7 @@ void Trainer::Introduction()
 	string lastName = mLastName;
 	string catchPhrase = mCatchPhrase;
 
-	cout << "\n" << firstName << " " << lastName << " said : " << mCatchPhrase << endl;
+	cout << "\n" << mFirstName << " " << mLastName << " said : " << mCatchPhrase << endl;
 }
 
 void Trainer::ChallengeTrainer(Trainer& thePlayer, Trainer& otherTrainer)
